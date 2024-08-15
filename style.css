@@ -41,7 +41,7 @@ html{
     list-style: none;
 }
 .contenedor-header header nav ul li a{
-    text-align: none;
+    text-align: center;
     color: #fff;
     margin: 0 15px;
     padding: 3px;
@@ -108,7 +108,7 @@ html{
     border: 1px solid #fff;
     border-radius: 100%;
     width: 42px;
-    height: 42;
+    height: 42px;
     line-height: 42px;
     margin: 40px 5px;
     font-size: 20px;
@@ -380,7 +380,7 @@ html{
 .curriculum .fila .item .conectori{
     height: 2px;
     background-color: #2e8b57;
-    width: 47px;
+    width: 9%;
     position: absolute;
     top: 50%;
     right: -47px;
@@ -399,7 +399,7 @@ html{
 .curriculum .fila .item .conectord{
     height: 2px;
     background-color: #2e8b57;
-    width: 47px;
+    width: 9%;
     position: absolute;
     top: 50%;
     left: -47px;
@@ -605,7 +605,7 @@ footer .redes a{
     border: 1px solid #fff;
     border-radius: 100%;
     width: 42px;
-    height: 42;
+    height: 42px;
     line-height: 42px;
     margin: 40px 5px;
     font-size: 20px;

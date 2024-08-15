@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <meta name="description" content="Portfolio profesional de Ignacio Padrón, SysAdmin, DevOps y Ciberseguridad.">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,16 +39,15 @@
      <section id="inicio" class="inicio">
         <div class="contenido-banner">
             <div class="contenedor-img">
-                <img src="img/foto carne Nacho-fotor-20240718234647.png" alt="">
+                <img src="img/foto carne Nacho-fotor-20240718234647.png" alt="imagen foto Nacho">
             </div>
             <h1>IGNACIO PADRÓN</h1>
-            <br>
             <h2>Administrador de Sistemas</h2>
             <h2>(SYSADMIN)</h2>
             <div class="redes">
-                <a href="https://www.linkedin.com/in/ignaciopadron/"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://github.com/ignaciopadron"><i class="fa-brands fa-github"></i></a>
-                <a href="https://www.instagram.com/ignaciopadronis/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/ignaciopadron/" aria-label="Linkedin de Ignacio Padrón"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/ignaciopadron" aria-label="GitHub de Ignacio Padrón"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.instagram.com/ignaciopadronis/" aria-label="Instagram de Ignacio Padrón"><i class="fa-brands fa-instagram"></i></a>
             </div>
         </div>
      </section>
@@ -237,7 +237,7 @@
             <div class="galeria">
                 <div class="proyecto">
                     <a href="OpenVPN ignaciopadron.pdf" download="OpenVPN ignaciopadron.pdf">
-                    <img src="img/imagen_openvpn.png" alt="" >
+                    <img src="img/imagen_openvpn.png" alt="imagen de OpenVPN" >
                     <div class="overlay">
                         <h3>Instalación y configuración de un servicio VPN con</h3>
                         <p>OpenVPN</p>
@@ -246,35 +246,35 @@
                     </a>
                 </div>
                 <div class="proyecto">
-                    <img src="img/imagen_Nginx.png" alt="">
+                    <img src="img/imagen_Nginx.png" alt="Imagen de Nginx">
                     <div class="overlay">
                         <h3>Instalación y configuración de un servidor Web con</h3>
                         <p>Nginx</p>                        
                     </div>
                 </div>
                 <div class="proyecto">
-                    <img src="img/imagen_RAID5.png" alt="">
+                    <img src="img/imagen_RAID5.png" alt="imagen de RAID5">
                     <div class="overlay">
                         <h3>Instalación y configuración</h3>
                         <p>RAID 5 Y SAMBA</p>                        
                     </div>
                 </div>
                 <div class="proyecto">
-                    <img src="img/imagen_ansible.png" alt="">
+                    <img src="img/imagen_ansible.png" alt="imagen de Ansible">
                     <div class="overlay">
                         <h3>Instalación y configuración</h3>
                         <p>Ansible</p>                        
                     </div>
                 </div>
                 <div class="proyecto">
-                    <img src="img/imagen_nextcloud.png" alt="">
+                    <img src="img/imagen_nextcloud.png" alt="imagen de Nextcloud">
                     <div class="overlay">
                         <h3>Instalación y configuración</h3>
                         <p>Nextcloud</p>                        
                     </div>
                 </div>
                 <div class="proyecto">
-                    <img src="img/imagen_dualboot.png" alt="">
+                    <img src="img/imagen_dualboot.png" alt="imagen de dualboot">
                     <div class="overlay">
                         <h3>Instalación y Configuración de un dual boot con diferentes sistemas operativos</h3>
                         <p>Debian 12 y Windows 10</p>                        
@@ -292,11 +292,21 @@
                     <!-- Formulario -->
                     <form action="https://formspree.io/f/mnnadbnr" method="POST">
                         <div class="col">
-                            <input type="text" placeholder="Nombre*" required>
-                            <input type="text" placeholder="Número de teléfono">
-                            <input type="email" name="email" placeholder="Email*" required>
-                            <input type="text" placeholder="Tema*" required>
-                            <textarea name="message" id="" cols="30" rows="10" placeholder="Mensaje"></textarea>
+                            <label for="name">Nombre*</label>
+                            <input type="text" id="name" placeholder="..." required>
+
+                            <label for="telefono">Número de teléfono</label>
+                            <input type="text" id="telefono" placeholder="+34 6...">
+
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" name="email" placeholder="...@...com*" required>
+
+                            <label for="tema">Tema</label>
+                            <input type="text" placeholder="...">
+
+                            <label for="message">Mensaje*</label>
+                            <textarea name="message" id="message" cols="30" rows="10" placeholder="Escribe aquí tu mensaje..."></textarea>
+
                             <button type="submit"> 
                                 Enviar Mensaje <i class="fa-solid fa-paper-plane"></i>
                                 <span class="overlay"></span>
@@ -305,7 +315,7 @@
                     </form>
                      <!-- Mapa -->
                       <div class="col">
-                            <img src="img/Captura mapa Malaga.png" alt="">
+                            <img src="img/Captura mapa Malaga.png" alt="imagen mapa Málaga">
                             <div class="info">
                                 <ul>
                                     <li>
