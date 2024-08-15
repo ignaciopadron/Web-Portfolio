@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" 
+    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--Menú Encabezado -->
+    <div class="contenedor-header">
+        <header>
+            <div class="logo">
+                <a href="#">Ignacio</a>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#inicio" onclick="seleccionar()">INICIO</a></li>
+                    <li><a href="#sobremi" onclick="seleccionar()">SOBRE MI</a></li>
+                    <li><a href="#skills" onclick="seleccionar()">SKILLS</a></li>
+                    <li><a href="#curriculum" onclick="seleccionar()">CURRICULUM</a></li>
+                    <li><a href="#portfolio" onclick="seleccionar()">PORTFOLIO</a></li>
+                    <li><a href="#contacto" onclick="seleccionar()">CONTACTO</a></li>
+                </ul>
+            </nav>
+            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
+                <i class="fa-solid fa-bars"></i>
+
+            </div>
+        </header>
+    </div>
+
+    <!-- Sección Inicio -->
+     <section id="inicio" class="inicio">
+        <div class="contenido-banner">
+            <div class="contenedor-img">
+                <img src="img/foto carne Nacho-fotor-20240718234647.png" alt="">
+            </div>
+            <h1>IGNACIO PADRÓN</h1>
+            <br>
+            <h2>Administrador de Sistemas</h2>
+            <h2>(SYSADMIN)</h2>
+            <div class="redes">
+                <a href="https://www.linkedin.com/in/ignaciopadron/"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/ignaciopadron"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.instagram.com/ignaciopadronis/"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+     </section>
+
+     <!-- Sección sobre mi -->
+    <section id="sobremi" class="sobremi hidden">
+        <div class="contenido-seccion">
+            <h2>Sobre Mi</h2>
+            
+            <p><span>¡Hola Mundo! Soy Ignacio Padrón </span> SysAdmin o Administrador de Sistemas Informáticos en Red con sólidos conocimientos en configuración, mantenimiento y optimización de redes informáticas y sistemas operativos. He desarrollado esta página con HTML, CSS y JavaScript además de configurar el servidor (VPS) con Nginx para ofrecer el servicio web y presentarme.<br><br>
+            Actualmente, estoy dedicado completamente al estudio y crecimiento profesional en el campo de DevOps (Development & Operations). Mi enfoque está en integrar y automatizar procesos para mejorar la eficiencia en los equipos y reducir riesgos. Busco constantemente aprender y aplicar las mejores prácticas y herramientas disponibles. También tengo un gran interés por la rama de la Ciberseguridad - SecOps (Security Operations).<br><br>
+            Poseo un enfoque analítico, proactivo y autodidacta, con un grado universitario en Sociología así como experiencia y gran habilidad para trabajar en equipo, comunicar conceptos y resolver problemas todo ello acorde a mi gran inquietud y pasión por el ámbito tecnológico.</p>
+            <div class="fila">
+                <!-- Datos personales -->
+                <div class="col">
+                    <h3>Datos Personales</h3>
+                    <ul>
+                        <li>
+                            <strong>Fecha de nacimiento</strong>
+                            11-12-1988
+                        </li>
+                        <li>
+                            <strong>Teléfono</strong>
+                            +34 653 50 14 82
+                        </li>
+                        <li>
+                            <strong>Email</strong>
+                            <a href="mailto:ignaciopadrond@gmail.com">ignaciopadrond@gmail.com</a>
+                        </li>
+                        <li>
+                            <strong>Website</strong>
+                            www.ignaciopadron.es
+                        </li>
+                        <li>
+                            <strong>Dirección</strong>
+                            Málaga, España
+                        </li>
+                        <li>
+                            <strong>Cargo</strong>
+                            <span>SysAdmin</span>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!-- Intereses -->
+                <div class="col">
+                    <h3>Intereses</h3>
+                    <div class="contenedor-intereses">
+                        <div class="interes">
+                            <i class="fa-solid fa-book"></i>
+                            <span>LECTURA</span>
+                        </div>
+                        <div class="interes">
+                            <i class="fa-solid fa-guitar"></i>
+                            <span>GUITARRA</span>
+                        </div>
+                        <div class="interes">
+                            <i class="fa-solid fa-network-wired"></i>
+                            <span>REDES</span>
+                        </div>
+                        <div class="interes">
+                            <i class="fa-sharp fa-regular fa-futbol"></i>
+                            <span>DEPORTES</span>
+                        </div>
+                        <div class="interes">
+                            <i class="fa-brands fa-earlybirds"></i>
+                            <span>FILOSOFÍA</span>
+                        </div>
+                        <div class="interes">    
+                            <i class="fa-brands fa-linux"></i>
+                            <span>LINUX</span>
+                        </div>
+                        <div class="interes">    
+                            <i class="fa-solid fa-person-hiking"></i>
+                            <span>MONTAÑA</span>
+                        </div>
+                        <div class="interes">    
+                            <i class="fa-solid fa-cloud"></i>
+                            <span>CLOUD</span>
+                            <span>SERVER</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button><a href="sysadmincurriculum.pdf" download="curriculum.pdf">
+            Descargar CV <i class="fa-solid fa-download"></i></a>
+
+            <span class="overlay"></span>
+            </button>
+        </div>
+    </section>
+
+     <!-- Sección Skills -->
+     <section class="skills" id="skills">
+        <div class="contenido-seccion">
+            <h2>Skills</h2>
+            <div class="fila">
+                <!-- Technical Skills -->
+                <div class="col">
+                    <h3>Technical Skills</h3>
+                    <canvas id="technicalskills"></canvas>
+                </div>
+                <!-- Professional Skills-->
+                <div class="col">
+                    <h3>Professional Skills</h3>
+                    <canvas id="professionalskills"></canvas>
+                </div>
+            </div>
+        </div>
+     </section>
+     <!-- Curriculum -->
+      <section id="curriculum" class="curriculum">
+        <div class="contenido-seccion">
+            <h2>Curriculum</h2>
+            <div class="fila">
+                <div class="col izquierda">
+                    <h3>Educación</h3>
+                    <div class="item izq">
+                        <h4>ASIR (Administración de Sistemas Informáticos en Red)</h4>
+                        <span class="casa">Digitech FP</span>
+                        <span class="fecha">2023 - 2025</span>
+                        <p>Grado superior de formación profesional de ASIR. Hice 2 años de Administración de sistemas informáticos en red con un proyecto final y prácticas en una empresa</p>
+                        <div class="conectori">
+                            <div class="circuloi"></div>
+                        </div>
+                    </div>
+                    <div class="item izq">
+                        <h4>CCNA: Cisco Certified Networking Associate</h4>
+                        <span class="casa">Cisco Networking Academy</span>
+                        <span class="fecha">2024</span>
+                        <p>Certificación que valida los conocimientos en cuanto a instalación, configuración, operación y resolución de problemas en redes de datos basadas en equipamiento de routers y switches. </p>
+                        <div class="conectori">
+                            <div class="circuloi"></div>
+                        </div>
+                    </div>
+                    <div class="item izq">
+                        <h4>Introducción a la programación en Python I y Programación en Python II</h4>
+                        <span class="casa">Coursera: Pontificia Universidad Católica de Chile</span>
+                        <span class="fecha">2024</span>
+                        <p>Dos cursos de 6 semanas cada uno sobre el lenguaje de programación Python donde aprendí los fundamentos de la programación como las funciones, strings, archivos. Esctructuras de datos como listas, tuplas, stacks, colas, conjuntos y diccionarios. Elementos de modelación para la programación orientada a objetos y recursión y su uso para resolución de problemas. </p>
+                        <div class="conectori">
+                            <div class="circuloi"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col derecha">
+                    <h3>Experiencia laboral</h3>
+                    <div class="item der">
+                        <h4>Front Developer</h4>
+                        <span class="casa">Nombre de compañia</span>
+                        <span class="fecha">2011 - 2015</span>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus eaque saepe excepturi accusamus, veniam quia vero, sunt dicta deserunt eligendi asperiores cupiditate facilis ullam magnam vitae praesentium modi expedita dolore.</p>
+                        <div class="conectord">
+                            <div class="circulod"></div>
+                        </div>
+                    </div>
+                    <div class="item der">
+                        <h4>Front Developer</h4>
+                        <span class="casa">Nombre de compañia</span>
+                        <span class="fecha">2011 - 2015</span>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus eaque saepe excepturi accusamus, veniam quia vero, sunt dicta deserunt eligendi asperiores cupiditate facilis ullam magnam vitae praesentium modi expedita dolore.</p>
+                        <div class="conectord">
+                            <div class="circulod"></div>
+                        </div>
+                    </div>
+                    <div class="item der">
+                        <h4>Front Developer</h4>
+                        <span class="casa">Nombre de compañia</span>
+                        <span class="fecha">2011 - 2015</span>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus eaque saepe excepturi accusamus, veniam quia vero, sunt dicta deserunt eligendi asperiores cupiditate facilis ullam magnam vitae praesentium modi expedita dolore.</p>
+                        <div class="conectord">
+                            <div class="circulod"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      </section>
+
+      <!-- Portfolio -->
+       <section id="portfolio" class="portfolio">
+        <div class="contenido-seccion">
+            <h2>PORTFOLIO</h2>
+            <div class="galeria">
+                <div class="proyecto">
+                    <a href="OpenVPN ignaciopadron.pdf" download="OpenVPN ignaciopadron.pdf">
+                    <img src="img/imagen_openvpn.png" alt="" >
+                    <div class="overlay">
+                        <h3>Instalación y configuración de un servicio VPN con</h3>
+                        <p>OpenVPN</p>
+                                   
+                    </div>
+                    </a>
+                </div>
+                <div class="proyecto">
+                    <img src="img/imagen_Nginx.png" alt="">
+                    <div class="overlay">
+                        <h3>Instalación y configuración de un servidor Web con</h3>
+                        <p>Nginx</p>                        
+                    </div>
+                </div>
+                <div class="proyecto">
+                    <img src="img/imagen_RAID5.png" alt="">
+                    <div class="overlay">
+                        <h3>Instalación y configuración</h3>
+                        <p>RAID 5 Y SAMBA</p>                        
+                    </div>
+                </div>
+                <div class="proyecto">
+                    <img src="img/imagen_ansible.png" alt="">
+                    <div class="overlay">
+                        <h3>Instalación y configuración</h3>
+                        <p>Ansible</p>                        
+                    </div>
+                </div>
+                <div class="proyecto">
+                    <img src="img/imagen_nextcloud.png" alt="">
+                    <div class="overlay">
+                        <h3>Instalación y configuración</h3>
+                        <p>Nextcloud</p>                        
+                    </div>
+                </div>
+                <div class="proyecto">
+                    <img src="img/imagen_dualboot.png" alt="">
+                    <div class="overlay">
+                        <h3>Instalación y Configuración de un dual boot con diferentes sistemas operativos</h3>
+                        <p>Debian 12 y Windows 10</p>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+       </section>
+
+       <!-- Contacto -->
+        <section id="contacto" class="contacto">
+            <div class="contenido-seccion">
+                <h2>CONTACTO</h2>
+                <div class="fila">
+                    <!-- Formulario -->
+                    <form action="https://formspree.io/f/mnnadbnr" method="POST">
+                        <div class="col">
+                            <input type="text" placeholder="Nombre*" required>
+                            <input type="text" placeholder="Número de teléfono">
+                            <input type="email" name="email" placeholder="Email*" required>
+                            <input type="text" placeholder="Tema*" required>
+                            <textarea name="message" id="" cols="30" rows="10" placeholder="Mensaje"></textarea>
+                            <button type="submit"> 
+                                Enviar Mensaje <i class="fa-solid fa-paper-plane"></i>
+                                <span class="overlay"></span>
+                            </button>
+                        </div>
+                    </form>
+                     <!-- Mapa -->
+                      <div class="col">
+                            <img src="img/Captura mapa Malaga.png" alt="">
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        Málaga, España
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-mobile-screen-button"></i>
+                                        Teléfono: +34 653 50 14 82
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <a href="mailto:ignaciopadrond@gmail.com">ignaciopadrond@gmail.com</a>
+                                    </li>
+                                </ul>
+                            </div>
+                      </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+         <footer>
+            <a href="#inicio" class="arriba">
+                <i class="fa-solid fa-angles-up"></i>
+            </a>
+            <div class="redes">
+                <a href="https://www.linkedin.com/in/ignaciopadron/"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/ignaciopadron"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.instagram.com/ignaciopadronis/"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+         </footer>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.js"></script>
+         <script src="script.js"></script>
+</body>
+</html>
