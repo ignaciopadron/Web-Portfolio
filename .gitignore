@@ -1,0 +1,36 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Entornos de desarrollo
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencias y paquetes
+node_modules/
+vendor/
+npm-debug.log
+yarn-error.log
+
+# Archivos de construcción
+dist/
+build/
+.tmp/
+
+# Archivos de configuración local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de caché
+*.log
+*.cache
+.sass-cache/
+
+# Archivos específicos del proyecto que no quieres compartir
+smb.conf 

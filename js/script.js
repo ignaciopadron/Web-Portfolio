@@ -103,14 +103,11 @@ new Chart(ctx, {
 });
 
 const printCharts = () => {
-
-    renderModelsChart()
+    renderModelsChart();
 }
 
 const renderModelsChart = () => {
-
     // Datos del gráfico de donut ---------------------------------------------------------------------------
-
     const data = {
         labels: ['Comunicación', 'Trabajo en Equipo', 'Resolución de problemas', 'Dedicación y constancia', 'Proyect Management', 'Productividad', 'Trabajar bajo presión', 'Proactividad y Aprendizaje', 'Documentación', 'Adaptabilidad'],
         datasets: [{
@@ -144,33 +141,25 @@ const renderModelsChart = () => {
             borderWidth: 4,
             hoverOffset: 20,
         }]
-    }   
+    };   
+    
     // Opciones del gráfico de donut --------------------------------------------------------------------------
-
     const options = {
-        
         cutout: '25%',
         plugins: {
-            legend: { position: 'right', 
-                
+            legend: { 
+                position: 'right'
             }
         }
-    }
+    };
 
-    new Chart('professionalskills', {type: 'doughnut', data, options})
-
+    new Chart('professionalskills', {
+        type: 'doughnut', 
+        data, 
+        options
+    });
 }
 
-printCharts()
-
-//detecto el scrolling para aplicar la animacion de la barra de habilildades ----------------------------------
-
-document.getElementById("skill-octagon").addEventListener("mouseover", function(event) {
-    event.target.style.fill = "lightblue";
-});
-
-document.getElementById("skill-octagon").addEventListener("mouseout", function(event) {
-    event.target.style.fill = "";
-});
+printCharts();
 
 
