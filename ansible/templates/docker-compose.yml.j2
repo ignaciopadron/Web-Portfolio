@@ -1,0 +1,29 @@
+# ansible/templates/docker-compose.yml.j2
+
+version: '3.8'
+services:
+  # Servicio 1: Nginx Proxy Manager
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      # Puerto público para HTTP
+      - '80:80'
+      # Puerto público para HTTPS
+      - '443:443'
+      # Puerto para la interfaz de administración de NPM
+      - '81:81'
+    volumes:
+      # Persistimos los datos y certificados para que no se borren
+      - /srv/npm/data:/data
+      - /srv/npm/letsencrypt:/etc/letsencrypt
+
+  # Servicio 2: El servidor web de tu portfolio
+  portfolio_web:
+    image: 'nginx:alpine'
+    container_name: portfolio_web
+    restart: unless-stopped
+    volumes:
+      # Montamos el contenido de tu web dentro del contenedor
+      - /srv/portfolio/website:/usr/share/nginx/html

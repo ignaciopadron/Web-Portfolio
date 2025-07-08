@@ -1,37 +1,46 @@
 let menuVisible = false;
-
-//Función que oculta o muestra el menu -------------------------------------------------------------------
-
-function mostrarOcultarMenu() {
+//Función que oculta o muestra el menu
+function mostrarOcultarMenu(){
     const nav = document.getElementById("nav");
-    nav.classList.toggle("responsive");
-    menuVisible = !menuVisible;
+    if (menuVisible){
+        nav.classList.remove("responsive");
+        menuVisible = false;
+    }else {
+        nav.classList.add("responsive");
+        menuVisible = true;
+    }
 }
 
-// Oculta el menú cuando se hace clic fuera de él ------------------------------------------------------
-
+// Oculta el menú cuando se hace clic fuera de él
 document.addEventListener('click', function(event) {
     const nav = document.getElementById("nav");
     const menuButton = document.querySelector(".nav-responsive");
     if (menuVisible && !nav.contains(event.target) && !menuButton.contains(event.target)) {
-        mostrarOcultarMenu();
+        nav.classList.remove("responsive");
+        menuVisible = false;
     }
 });
 
-//Oculta el menú cuando el ratón no está sobre él (solo en pantallas móviles si se considera necesario) -------
-
+//Oculta el menú cuando el ratón no está sobre él (solo en pantallas móviles si se considera necesario)
 document.getElementById("nav").addEventListener('mouseleave', function() {
     if (menuVisible) {
-        mostrarOcultarMenu();
+        document.getElementById("nav").classList.remove("responsive");
+        menuVisible = false;
     }
 });
 
-function seleccionar() {
-    mostrarOcultarMenu();
+
+
+
+
+
+function seleccionar(){
+    //oculto el menu una vez que selecciono una opcion
+    document.getElementById("nav").classList ="";
+    menuVisible = false;
 }
 
-// Aparece la sección sobre mi ------------------------------------------------------------------------
-
+// Aparece la sección sobre mi
 document.addEventListener('DOMContentLoaded', () => {
     const aboutMeSection = document.querySelector('.sobremi');
 
@@ -47,10 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(aboutMeSection);
 });
 
- // Datos del gráfico de radar ---------------------------------------------------------------------------
 
+
+ // Datos del gráfico de radar
  const data = {
-    labels: ['' ,'HTML & CSS', 'JavaScript', 'Python', 'database', 'Web server', 'Virtual Machine', 'VPN', 'SAMBA', 'Networks', 'OS'],
+    labels: ['' ,'Docker', 'Go', 'Python', 'Observabilidad', 'Google Cloud', 'Ansible', 'VPN', 'Kubernetes', 'Terraform', 'Linux'],
     datasets: [{
         label: 'Technical Skills',
         data: [0, 90, 75, 50, 95, 85, 80, 85, 90, 90, 95], // Niveles de habilidades
@@ -65,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }]
 };
 
-// Opciones del gráfico de radar --------------------------------------------------------------------------------
+// Opciones del gráfico de radar
 const options = {
     scales: {
         r: { // 'r' para el eje radial en Chart.js 3.x y posteriores
@@ -93,8 +103,7 @@ const options = {
     }
 };
 
-// Crear el gráfico de radar -------------------------------------------------------------------------
-
+// Crear el gráfico de radar
 const ctx = document.getElementById('technicalskills').getContext('2d');
 new Chart(ctx, {
     type: 'radar',
@@ -103,11 +112,13 @@ new Chart(ctx, {
 });
 
 const printCharts = () => {
-    renderModelsChart();
+
+    renderModelsChart()
 }
 
 const renderModelsChart = () => {
-    // Datos del gráfico de donut ---------------------------------------------------------------------------
+
+
     const data = {
         labels: ['Comunicación', 'Trabajo en Equipo', 'Resolución de problemas', 'Dedicación y constancia', 'Proyect Management', 'Productividad', 'Trabajar bajo presión', 'Proactividad y Aprendizaje', 'Documentación', 'Adaptabilidad'],
         datasets: [{
@@ -140,26 +151,37 @@ const renderModelsChart = () => {
             ],
             borderWidth: 4,
             hoverOffset: 20,
+            
+            
+       
         }]
-    };   
-    
-    // Opciones del gráfico de donut --------------------------------------------------------------------------
+    }   
+
     const options = {
+        
         cutout: '25%',
         plugins: {
-            legend: { 
-                position: 'right'
+            legend: { position: 'right', 
+                
             }
         }
-    };
+    }
 
-    new Chart('professionalskills', {
-        type: 'doughnut', 
-        data, 
-        options
-    });
+    new Chart('professionalskills', {type: 'doughnut', data, options})
+
 }
 
-printCharts();
 
+printCharts()
+
+//detecto el scrolling para aplicar la animacion de la barra de habilildades
+window.onscroll = function(){
+    efectoHabilidades();
+}
+
+// Ejemplo simple de cómo podrías agregar interactividad
+document.getElementById("skill-octagon").addEventListener("mouseover", function(event) {
+    // Cambiar el color de la sección cuando el ratón está sobre ella
+    event.target.style.fill = "lightblue";
+});
 

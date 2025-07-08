@@ -1,0 +1,79 @@
+# ansible/deploy.yaml
+
+---
+- name: 2. Desplegar Portfolio con Docker
+  hosts: vps
+  become: yes
+
+  tasks:
+    - name: Instalar prerrequisitos de Docker
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+        update_cache: yes
+
+    - name: Añadir clave GPG oficial de Docker
+      get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/trusted.gpg.d/docker.asc
+        mode: '0644'
+        force: true
+
+    - name: Añadir el repositorio de Docker
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        state: present
+
+    - name: Instalar Docker y Docker Compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin # Usa docker-compose (sin guion) para el plugin
+        state: present
+    
+    - name: Asegurar que el usuario 'ciberpadron' pueda usar Docker
+      user:
+        name: ciberpadron
+        groups: docker
+        append: yes
+        
+    - name: Forzar el refresco de la conexión para aplicar los nuevos grupos
+      meta: reset_connection
+
+    - name: Crear directorios necesarios para el proyecto en el servidor
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: ciberpadron
+        group: ciberpadron
+        mode: '0755'
+      loop:
+        - /srv/portfolio
+        - /srv/npm/data
+        - /srv/npm/letsencrypt
+
+    - name: Copiar los ficheros de la página web al servidor
+      copy:
+        src: ../website/ # Copia el contenido de la carpeta local 'website'
+        dest: /srv/portfolio/website/
+        owner: ciberpadron
+        group: ciberpadron
+
+    - name: Desplegar el fichero docker-compose.yml desde la plantilla
+      template:
+        src: templates/docker-compose.yml.j2
+        dest: /srv/portfolio/docker-compose.yml
+        owner: ciberpadron
+        group: ciberpadron
+
+    - name: Lanzar los contenedores con Docker Compose
+      community.docker.docker_compose_v2:
+        project_src: /srv/portfolio
+        state: present # Asegura que los servicios estén corriendo
+      become_user: ciberpadron
