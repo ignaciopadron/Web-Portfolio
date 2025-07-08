@@ -58,12 +58,13 @@
         - /srv/npm/data
         - /srv/npm/letsencrypt
 
-    - name: Copiar los ficheros de la página web al servidor
-      copy:
-        src: ../website/ # Copia el contenido de la carpeta local 'website'
-        dest: /srv/portfolio/website/
-        owner: ciberpadron
-        group: ciberpadron
+    - name: Clonar el repositorio de la web en el servidor
+      ansible.builtin.git:
+        repo: 'https://github.com/ignaciopadron/Web-Portfolio.git'
+        dest: /srv/portfolio/website
+        version: master
+        force: yes
+      become_user: ciberpadron
 
     - name: Desplegar el fichero docker-compose.yml desde la plantilla
       template:

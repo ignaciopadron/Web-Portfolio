@@ -1,0 +1,34 @@
+name: Deploy Website to Production
+
+# Trigger: Se activa en cada push a la rama 'master'
+on:
+  push:
+    branches:
+      - master
+
+# Jobs: Define los trabajos a ejecutar
+jobs:
+  deploy:
+    # Usamos la última versión de Ubuntu que ofrece GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Server via SSH
+        # Usamos una Action popular y segura para ejecutar comandos por SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          # Sacamos los datos de los Secrets que configuramos en GitHub
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
+          # El script que se ejecutará en el servidor
+          script: |
+            # Navegamos al directorio donde está clonado el repositorio
+            cd /srv/portfolio/website
+            
+            # Descargamos los últimos cambios desde la rama master de GitHub
+            git pull origin master
+            
+            # Mensaje de éxito
+            echo "Deployment successful!" 
