@@ -15,7 +15,7 @@
         groups: vps
         ansible_user: "{{ ansible_user }}"
 
-- name: 2. Desplegar Portfolio con Docker
+- name: 2. Desplegar infraestructura y servicios Docker
   hosts: vps
   become: yes
   vars_files:
@@ -74,6 +74,14 @@
         - /srv/npm/data
         - /srv/npm/letsencrypt
 
+    - name: Crear directorio para la web con los permisos correctos
+      ansible.builtin.file:
+        path: /srv/portfolio/website
+        state: directory
+        owner: ciberpadron
+        group: ciberpadron
+        mode: '0755'
+
     - name: Comprobar si el directorio de la web es un repositorio git válido
       stat:
         path: /srv/portfolio/website/.git
@@ -92,7 +100,19 @@
         version: master
         force: yes # Ensures it checks out 'master' and pulls latest
       become_user: ciberpadron
+      notify: Ajustar permisos para Nginx
 
+  handlers:
+    - name: Ajustar permisos para Nginx
+      shell: |
+        find /srv/portfolio/website -type d -exec chmod 755 {} \;
+        find /srv/portfolio/website -type f -exec chmod 644 {} \;
+      become: yes
+
+- name: 3. Gestionar servicios de Docker
+  hosts: vps
+  become: yes
+  tasks:
     - name: Desplegar el fichero docker-compose.yml desde la plantilla
       template:
         src: templates/docker-compose.yml.j2

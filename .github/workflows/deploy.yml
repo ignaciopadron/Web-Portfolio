@@ -13,22 +13,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to Server via SSH
-        # Usamos una Action popular y segura para ejecutar comandos por SSH
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Desplegar archivos de la web con rsync
+        uses: easingthemes/ssh-deploy@v5.0.0
         with:
-          # Sacamos los datos de los Secrets que configuramos en GitHub
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          
-          # El script que se ejecutará en el servidor
-          script: |
-            # Navegamos al directorio donde está clonado el repositorio
-            cd /srv/portfolio/website
-            
-            # Descargamos los últimos cambios desde la rama master de GitHub
-            git pull origin master
-            
-            # Mensaje de éxito
-            echo "Deployment successful!" 
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          # Directorio fuente en el repo (¡la barra al final es importante!)
+          SOURCE: "website/"
+          # Directorio destino en el servidor
+          TARGET: "/srv/portfolio/website"
+          # Excluir archivos innecesarios para más seguridad
+          EXCLUDE: "/.git/, /.github/, /ansible/, /node_modules/"
+          # Opciones de rsync:
+          # -r: recursivo
+          # -l: copia enlaces simbólicos
+          # -t: preserva tiempos de modificación
+          # -z: comprime los datos
+          # -v: modo verbose (más información en los logs)
+          # --delete: borra en el destino los archivos que ya no existen en la fuente
+          ARGS: "-rltzv --delete" 
