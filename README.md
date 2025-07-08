@@ -17,24 +17,23 @@ Este proyecto se divide en dos componentes principales: la **aplicación web** y
 - **Formspree**: Gestión del formulario de contacto sin backend propio.
 
 #### **Infraestructura (DevOps/IaC)**
-- **Docker & Docker Compose**: Contenerización del servidor web Nginx para un entorno aislado y portable.
-- **Nginx**: Servidor web ligero para servir el contenido estático.
-- **Ansible**: Automatización de la configuración del servidor (hardening, instalación de Docker) y del despliegue de la aplicación.
-- **GitHub Actions**: Orquestador de CI/CD para el despliegue automático en el servidor tras un `push` a la rama `master`.
-- **UFW & Fail2Ban**: Securización básica del servidor.
+- **Docker & Docker Compose**: Contenerización de los servicios.
+- **Nginx Proxy Manager**: Termina TLS, gestiona certificados y reenvía el tráfico al contenedor de la web.
+- **Nginx (alpine)**: Contenedor ultraligero que sirve los ficheros estáticos.
+- **Ansible**: Provisiona el VPS (paquetes, Docker, carpetas, `docker-compose.yml`) de forma idempotente.
+- **GitHub Actions**: Sincroniza la carpeta `website/` con el servidor mediante **`rsync`** en cada `push` a `master` (flujo CI/CD).
+- **UFW & Fail2Ban**: Capa básica de firewall y anti-bruteforce.
 
 ## 🔧 Despliegue Automatizado (CI/CD)
 
-El despliegue está 100% automatizado mediante un flujo de trabajo de GitHub Actions.
+1.  **Trigger**: cualquier `git push` a la rama `master`.
+2.  **Workflow** (`.github/workflows/deploy.yml`):
+    1. El runner hace *checkout* del repositorio.
+    2. Usa la acción `easingthemes/ssh-deploy` que encapsula **`rsync`** para copiar **solo** la carpeta `website/` al VPS (`/srv/portfolio/website`). Se usan claves SSH almacenadas como *Secrets*.
+    3. La opción `--delete` de rsync mantiene el directorio de destino como espejo exacto del repositorio.
+3.  **Resultado**: los cambios de HTML/CSS/JS están disponibles de inmediato; Nginx los sirve sin reiniciar contenedores.
 
-1.  **Activador (Trigger)**: Cualquier `push` a la rama `master` inicia el workflow.
-2.  **Proceso de CI/CD**:
-    - Un runner de GitHub se conecta de forma segura al servidor VPS mediante SSH.
-    - Navega al directorio del proyecto (`/srv/portfolio/website`).
-    - Ejecuta `git pull` para descargar la última versión del código.
-3.  **Resultado**: Los nuevos cambios se publican instantáneamente, ya que Nginx sirve los archivos desde un volumen montado que refleja el repositorio.
-
-No es necesaria ninguna intervención manual en el servidor para actualizar la web.
+La infraestructura (contenedores, firewall, etc.) solo se gestiona con Ansible; el código se entrega vía CI/CD.
 
 ## 📁 Estructura del Proyecto
 
@@ -47,7 +46,7 @@ No es necesaria ninguna intervención manual en el servidor para actualizar la w
 │   ├── templates/
 │   │   └── docker-compose.yml.j2 # Plantilla de Docker Compose
 │   ├── vars/
-│   │   └── main.yml         # Variables de configuración
+│   │   └── secrets.yml      # Variables sensibles cifradas con Ansible Vault
 │   ├── deploy.yaml          # Playbook para desplegar Docker y la app
 │   ├── hosts.ini            # Inventario de hosts (servidor VPS)
 │   └── playbook.yaml        # Playbook para securizar y configurar el servidor
@@ -57,17 +56,3 @@ No es necesaria ninguna intervención manual en el servidor para actualizar la w
 │   └── script.js            # Lógica de JavaScript
 └── README.md                # Este archivo
 ```
-
-## 📝 Licencia
-
-Este proyecto está bajo la licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
-
-## 📞 Contacto
-
-- **Email**: [ignaciopadrond@gmail.com](mailto:ignaciopadrond@gmail.com)
-- **LinkedIn**: [linkedin.com/in/ignaciopadron](https://www.linkedin.com/in/ignaciopadron/)
-- **GitHub**: [github.com/ignaciopadron](https://github.com/ignaciopadron)
-
----
-
-Desarrollado con ❤️ por Ignacio Padrón 
