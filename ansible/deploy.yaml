@@ -82,32 +82,8 @@
         group: ciberpadron
         mode: '0755'
 
-    - name: Comprobar si el directorio de la web es un repositorio git válido
-      stat:
-        path: /srv/portfolio/website/.git
-      register: git_repo_check
-
-    - name: Limpiar directorio de la web si no es un repositorio git
-      file:
-        path: /srv/portfolio/website
-        state: absent
-      when: not git_repo_check.stat.exists
-
-    - name: Clonar o actualizar el repositorio de la web en el servidor
-      ansible.builtin.git:
-        repo: 'https://github.com/ignaciopadron/Web-Portfolio.git'
-        dest: /srv/portfolio/website
-        version: master
-        force: yes # Ensures it checks out 'master' and pulls latest
-      become_user: ciberpadron
-      notify: Ajustar permisos para Nginx
-
-  handlers:
-    - name: Ajustar permisos para Nginx
-      shell: |
-        find /srv/portfolio/website -type d -exec chmod 755 {} \;
-        find /srv/portfolio/website -type f -exec chmod 644 {} \;
-      become: yes
+  # Eliminamos los handlers porque ya no son necesarios
+  handlers: []
 
 - name: 3. Gestionar servicios de Docker
   hosts: vps
