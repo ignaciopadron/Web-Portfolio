@@ -1,9 +1,25 @@
 # ansible/deploy.yaml
 
 ---
+- name: 1. Preparar el inventario dinámicamente
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+    - vars/secrets.yml
+
+  tasks:
+    - name: Añadir el VPS al inventario en memoria
+      add_host:
+        name: "{{ vps_host }}"
+        groups: vps
+        ansible_user: "{{ ansible_user }}"
+
 - name: 2. Desplegar Portfolio con Docker
   hosts: vps
   become: yes
+  vars_files:
+    - vars/secrets.yml
 
   tasks:
     - name: Instalar prerrequisitos de Docker
@@ -58,12 +74,23 @@
         - /srv/npm/data
         - /srv/npm/letsencrypt
 
-    - name: Clonar el repositorio de la web en el servidor
+    - name: Comprobar si el directorio de la web es un repositorio git válido
+      stat:
+        path: /srv/portfolio/website/.git
+      register: git_repo_check
+
+    - name: Limpiar directorio de la web si no es un repositorio git
+      file:
+        path: /srv/portfolio/website
+        state: absent
+      when: not git_repo_check.stat.exists
+
+    - name: Clonar o actualizar el repositorio de la web en el servidor
       ansible.builtin.git:
         repo: 'https://github.com/ignaciopadron/Web-Portfolio.git'
         dest: /srv/portfolio/website
         version: master
-        force: yes
+        force: yes # Ensures it checks out 'master' and pulls latest
       become_user: ciberpadron
 
     - name: Desplegar el fichero docker-compose.yml desde la plantilla

@@ -4,6 +4,7 @@ Thumbs.db
 desktop.ini
 
 # Entornos de desarrollo
+.vscode
 .vscode/
 .idea/
 *.sublime-project
@@ -33,4 +34,13 @@ build/
 .sass-cache/
 
 # Archivos específicos del proyecto que no quieres compartir
-smb.conf 
+smb.conf
+
+# Archivos de Ansible que pueden contener secretos o información del entorno
+ansible/hosts.ini
+ansible/vars/main.yml
+*.retry
+
+# Claves privadas
+*.key
+*.pem 
