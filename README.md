@@ -1,5 +1,7 @@
 # Portfolio Personal y Profesional de Ignacio Padrón
 
+[🇪🇸 Español](README.md) | [🇺🇸 English](README_EN.md)
+
 Este repositorio contiene el código fuente de mi sitio web personal/portfolio: [ignaciopadron.es](https://ignaciopadron.es).
 
 El proyecto está diseñado para ser desplegado de forma automática y consistente en un servidor VPS utilizando contenedores Docker.
