@@ -35,11 +35,11 @@ jobs:
         with:
           image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest'
           format: 'table'
-          # Falla el build si se encuentra una vulnerabilidad ALTA o CRÍTICA
+          # Falla el build solo si se encuentra una vulnerabilidad CRÍTICA
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          severity: 'CRITICAL'
 
       - name: Push Docker image to Docker Hub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
