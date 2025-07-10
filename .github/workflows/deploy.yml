@@ -1,38 +1,70 @@
-name: Deploy Website to Production
+name: Build, Push, and Deploy Docker Image
 
 # Trigger: Se activa en cada push a la rama 'master'
 on:
   push:
     branches:
       - master
-
-# Jobs: Define los trabajos a ejecutar
 jobs:
-  deploy:
-    # Usamos la última versión de Ubuntu que ofrece GitHub
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout del repositorio
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Desplegar archivos de la web con rsync
-        uses: easingthemes/ssh-deploy@v5.0.0
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          # Directorio fuente en el repo (¡la barra al final es importante!)
-          SOURCE: "website/"
-          # Directorio destino en el servidor
-          TARGET: "/srv/portfolio/website"
-          # Excluir archivos innecesarios para más seguridad
-          EXCLUDE: "/.git/, /.github/, /ansible/, /node_modules/"
-          # Opciones de rsync:
-          # -r: recursivo
-          # -l: copia enlaces simbólicos
-          # -t: preserva tiempos de modificación
-          # -z: comprime los datos
-          # -v: modo verbose (más información en los logs)
-          # --delete: borra en el destino los archivos que ya no existen en la fuente
-          ARGS: "-rltzv --delete" 
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and load Docker image
+        id: build-image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          load: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@v0.22.0
+        with:
+          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest'
+          format: 'table'
+          # Falla el build si se encuentra una vulnerabilidad ALTA o CRÍTICA
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Push Docker image to Docker Hub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # 1. Descarga la última versión de la imagen desde Docker Hub
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
+
+            # 2. Detiene y elimina el contenedor antiguo si existe (ignora errores si no existe)
+            docker stop ignaciopadron-website || true
+            docker rm ignaciopadron-website || true
+
+            # 3. Inicia un nuevo contenedor con la imagen actualizada
+            # -d: modo detached (se ejecuta en segundo plano)
+            # -p 80:80: mapea el puerto 80 del VPS al puerto 80 del contenedor
+            # --name: le da un nombre fácil de recordar al contenedor
+            # --restart always: asegura que el contenedor se inicie si el servidor se reinicia
+            docker run -d -p 80:80 --name ignaciopadron-website --restart always ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
