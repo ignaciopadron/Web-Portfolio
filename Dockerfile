@@ -13,6 +13,8 @@ COPY ./website/ .
 # Usamos la imagen más reciente y estable de Nginx basada en Alpine
 FROM nginx:stable-alpine
 
+RUN apk update && apk upgrade
+
 # Copiamos los archivos estáticos desde la etapa 'builder' al directorio web de Nginx.
 COPY --from=builder /app /usr/share/nginx/html
 
