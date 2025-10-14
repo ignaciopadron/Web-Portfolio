@@ -35,7 +35,6 @@ jobs:
         with:
           image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest'
           format: 'table'
-          # Falla el build solo si se encuentra una vulnerabilidad CRÍTICA
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
@@ -58,13 +57,19 @@ jobs:
             # 1. Descarga la última versión de la imagen desde Docker Hub
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
 
-            # 2. Detiene y elimina el contenedor antiguo si existe (ignora errores si no existe)
+            # 2. Detiene y elimina el contenedor antiguo si existe
             docker stop ignaciopadron-website || true
             docker rm ignaciopadron-website || true
 
-            # 3. Inicia un nuevo contenedor con la imagen actualizada
-            # -d: modo detached (se ejecuta en segundo plano)
-            # -p 80:80: mapea el puerto 80 del VPS al puerto 80 del contenedor
-            # --name: le da un nombre fácil de recordar al contenedor
-            # --restart always: asegura que el contenedor se inicie si el servidor se reinicia
-            docker run -d -p 80:80 --name ignaciopadron-website --restart always ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
+            # 3. (Buena práctica) Limpia imágenes antiguas que no se estén usando para ahorrar espacio
+            docker image prune -af
+
+            # 4. Inicia el nuevo contenedor CONECTADO A LA RED DEL PROXY
+            #    - SIN mapeo de puertos (-p) porque Nginx Proxy Manager se encarga de eso.
+            #    - --network npm_default: Conecta este contenedor a la red de Nginx Proxy Manager.
+            #    - --restart always: Asegura que el contenedor se reinicie si el servidor lo hace.
+            docker run -d \
+              --name ignaciopadron-website \
+              --network proxy_network \
+              --restart always \
+              ${{ secrets.DOCKERHUB_USERNAME }}/ignaciopadron-portfolio:latest
